@@ -1,3 +1,4 @@
+import pizzasJSON from './assets/pizzas.json';
 import { Categories } from './components/Categories';
 import { Header } from './components/Header';
 import { PizzaBlock } from './components/PizzaBlock';
@@ -16,7 +17,16 @@ function App() {
           </div>
           <h2 className="content__title">Все пиццы</h2>
           <div className="content__items">
-            <PizzaBlock />
+            {pizzasJSON.pizzas.map(({ id, imageUrl, name, types, sizes, price }) => (
+              <PizzaBlock
+                key={id}
+                imageUrl={imageUrl}
+                name={name}
+                types={types}
+                sizes={sizes}
+                price={price}
+              />
+            ))}
           </div>
         </div>
       </div>
