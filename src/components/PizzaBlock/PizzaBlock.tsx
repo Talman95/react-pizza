@@ -2,13 +2,13 @@ import { useState } from 'react';
 
 type PropsType = {
   imageUrl: string;
-  name: string;
+  title: string;
   types: number[];
   sizes: number[];
   price: number;
 };
 
-export function PizzaBlock({ imageUrl, name, types, sizes, price }: PropsType) {
+export function PizzaBlock({ imageUrl, title, types, sizes, price }: PropsType) {
   const doughTypes = ['тонкое', 'традиционное'];
 
   const [selectedType, setSelectedType] = useState<number>(types[0]);
@@ -26,7 +26,7 @@ export function PizzaBlock({ imageUrl, name, types, sizes, price }: PropsType) {
   return (
     <div className="pizza-block">
       <img className="pizza-block__image" src={imageUrl} alt="Pizza" />
-      <h4 className="pizza-block__title">{name}</h4>
+      <h4 className="pizza-block__title">{title}</h4>
       <div className="pizza-block__selector">
         <ul>
           {types.map(type => (
