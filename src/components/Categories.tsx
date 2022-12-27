@@ -1,4 +1,5 @@
 import { useState } from 'react';
+
 import { PizzaCategory } from '../enums/PizzaCategory';
 
 export function Categories() {
