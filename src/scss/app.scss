@@ -14,25 +14,50 @@ body {
   margin: 50px auto;
   border-radius: 10px;
   max-width: 1400px;
+
+  @media(max-width: 672px) {
+    width: calc(100vw - 50px);
+    margin: 30px auto;
+  }
 }
 
 .content {
   padding: 40px 0;
 
   &__title {
-    margin: 35px 0;
+    font-weight: 800;
+    font-size: 38px;
+    margin-top: 60px;
+    margin-bottom: 50px;
+
+    @media(max-width: 722px) {
+      display: flex;
+      justify-content: center;
+    }
   }
 
   &__items {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
+
+    @media(max-width: 722px) {
+      justify-content: center;
+    }
   }
 
   &__top {
     display: flex;
     align-items: center;
     justify-content: space-between;
+
+    @media(max-width: 1290px) {
+      flex-direction: column;
+
+      .categories {
+        margin-bottom: 30px;
+      }
+    }
   }
 }
 
