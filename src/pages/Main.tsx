@@ -23,7 +23,7 @@ export default function Main() {
   }, []);
 
   return (
-    <>
+    <div className="container">
       <div className="content__top">
         <Categories />
         <Sort />
@@ -43,6 +43,6 @@ export default function Main() {
               />
             ))}
       </div>
-    </>
+    </div>
   );
 }
