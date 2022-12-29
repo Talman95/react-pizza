@@ -1,19 +1,26 @@
 import { useState } from 'react';
+import { SortType } from '../types/SortType';
 
-export function Sort() {
-  const sortTypes = ['популярности', 'цене', 'алфавиту'];
+type PropsType = {
+  selectedType: SortType;
+  setSelectedType: (selectedType: SortType) => void;
+};
+
+export function Sort({ selectedType, setSelectedType }: PropsType) {
+  const sortTypes: SortType[] = [
+    { title: 'популярности', type: 'raiting' },
+    { title: 'цене', type: 'price' },
+    { title: 'алфавиту', type: 'title' },
+  ];
 
   const [isVisible, setIsVisible] = useState(false);
-  const [selectedType, setSelectedType] = useState(0);
-
-  const sortName = sortTypes[selectedType];
 
   const onOpenSortClick = () => {
     setIsVisible(true);
   };
 
-  const onCloseSortClick = (index: number) => {
-    setSelectedType(index);
+  const onCloseSortClick = (type: SortType) => {
+    setSelectedType(type);
     setIsVisible(false);
   };
 
@@ -33,18 +40,18 @@ export function Sort() {
           />
         </svg>
         <b>Сортировка по:</b>
-        <span onClick={onOpenSortClick}>{sortName}</span>
+        <span onClick={onOpenSortClick}>{selectedType.title}</span>
       </div>
       {isVisible && (
         <div className="sort__popup">
           <ul>
-            {sortTypes.map((type, index) => (
+            {sortTypes.map(({ title, type }) => (
               <li
                 key={type}
-                onClick={() => onCloseSortClick(index)}
-                className={index === selectedType ? 'active' : ''}
+                onClick={() => onCloseSortClick({ title, type } as SortType)}
+                className={type === selectedType.type ? 'active' : ''}
               >
-                {type}
+                {title}
               </li>
             ))}
           </ul>

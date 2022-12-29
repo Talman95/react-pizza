@@ -1,8 +1,11 @@
-import { useState } from 'react';
-
 import { PizzaCategory } from '../enums/PizzaCategory';
 
-export function Categories() {
+type PropsType = {
+  selectedCategory: PizzaCategory;
+  onCategoryChange: (index: PizzaCategory) => void;
+};
+
+export function Categories({ selectedCategory, onCategoryChange }: PropsType) {
   const categories = [
     { title: 'Все', category: PizzaCategory.All },
     { title: 'Мясные', category: PizzaCategory.Meat },
@@ -12,21 +15,13 @@ export function Categories() {
     { title: 'Закрытые', category: PizzaCategory.Closed },
   ];
 
-  const [selectedCategory, setSelectedCategory] = useState<PizzaCategory>(
-    PizzaCategory.All,
-  );
-
-  const onCategoryClick = (index: PizzaCategory) => {
-    setSelectedCategory(index);
-  };
-
   return (
     <div className="categories">
       <ul>
         {categories.map(({ title, category }) => (
           <li
             key={title}
-            onClick={() => onCategoryClick(category)}
+            onClick={() => onCategoryChange(category)}
             className={selectedCategory === category ? 'active' : ''}
           >
             {title}

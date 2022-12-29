@@ -4,29 +4,51 @@ import { Categories } from '../components/Categories';
 import { PizzaBlock } from '../components/PizzaBlock/PizzaBlock';
 import { PizzaSkeleton } from '../components/PizzaBlock/PizzaSkeleton';
 import { Sort } from '../components/Sort';
+import { PizzaCategory } from '../enums/PizzaCategory';
 import { PizzaType } from '../types/PizzaType';
+import { SortType } from '../types/SortType';
 
 export default function Main() {
   const [pizzas, setPizzas] = useState<PizzaType[]>([]);
   const [isLoading, setIsLoading] = useState(false);
 
+  const [selectedCategory, setSelectedCategory] = useState<PizzaCategory>(
+    PizzaCategory.All,
+  );
+  const [selectedType, setSelectedType] = useState<SortType>({
+    title: 'популярности',
+    type: 'raiting',
+  });
+
   useEffect(() => {
+    const category = selectedCategory > 0 ? '&category=' + selectedCategory : '';
+
     setIsLoading(true);
-    fetch('https://626d16545267c14d5677d9c2.mockapi.io/items?page=1&limit=4')
+
+    fetch(
+      `${process.env.REACT_APP_BASE_URL}?sortBy=${selectedType.type}&order=desc${category}`,
+    )
       .then(res => {
         return res.json();
       })
       .then(res => {
-        setPizzas(res);
+        setPizzas(res.products);
         setIsLoading(false);
       });
-  }, []);
+  }, [selectedCategory, selectedType]);
+
+  const onCategoryChange = (index: PizzaCategory) => {
+    setSelectedCategory(index);
+  };
 
   return (
     <div className="container">
       <div className="content__top">
-        <Categories />
-        <Sort />
+        <Categories
+          selectedCategory={selectedCategory}
+          onCategoryChange={onCategoryChange}
+        />
+        <Sort selectedType={selectedType} setSelectedType={setSelectedType} />
       </div>
       <h2 className="content__title">Все пиццы</h2>
       <div className="content__items">
