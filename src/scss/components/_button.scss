@@ -12,13 +12,13 @@
   border: 1px solid transparent;
   @include noselect();
 
-  @media(max-width: 475px) {
+  @media (max-width: 475px) {
     justify-content: center;
   }
 
   &__price,
   &__delimiter {
-    @media(max-width: 475px) {
+    @media (max-width: 475px) {
       display: none;
     }
   }

@@ -1,5 +1,6 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 
+import { SearchContext, SearchContextType } from '../App';
 import { Categories } from '../components/Categories';
 import { PizzaBlock } from '../components/PizzaBlock/PizzaBlock';
 import { PizzaSkeleton } from '../components/PizzaBlock/PizzaSkeleton';
@@ -12,6 +13,8 @@ export default function Main() {
   const [pizzas, setPizzas] = useState<PizzaType[]>([]);
   const [isLoading, setIsLoading] = useState(false);
 
+  const { searchValue } = useContext(SearchContext) as SearchContextType;
+
   const [selectedCategory, setSelectedCategory] = useState<PizzaCategory>(
     PizzaCategory.All,
   );
@@ -19,6 +22,10 @@ export default function Main() {
     title: 'популярности',
     type: 'raiting',
   });
+
+  const filteredPizzas = pizzas.filter(pizza =>
+    pizza.title.toLowerCase().includes(searchValue.toLowerCase()),
+  );
 
   useEffect(() => {
     const category = selectedCategory > 0 ? '&category=' + selectedCategory : '';
@@ -54,7 +61,7 @@ export default function Main() {
       <div className="content__items">
         {isLoading
           ? [...new Array(6)].map((_, index) => <PizzaSkeleton key={index} />)
-          : pizzas.map(({ id, imageUrl, title, types, sizes, price }) => (
+          : filteredPizzas.map(({ id, imageUrl, title, types, sizes, price }) => (
               <PizzaBlock
                 key={id + title}
                 imageUrl={imageUrl}
