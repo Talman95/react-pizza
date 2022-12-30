@@ -1,20 +1,16 @@
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { pizzaApi } from '../api/pizza-api';
 
-import { SearchContext, SearchContextType } from '../App';
-import { Categories } from '../components/Categories';
-import { PizzaBlock } from '../components/PizzaBlock/PizzaBlock';
-import { PizzaSkeleton } from '../components/PizzaBlock/PizzaSkeleton';
-import { Sort } from '../components/Sort';
+import { Categories } from '../components/Main/Categories/Categories';
+import { PizzasList } from '../components/Main/PizzasList/PizzasList';
+import { Sort } from '../components/Main/Sort/Sort';
 import { PizzaCategory } from '../enums/PizzaCategory';
 import { PizzaType } from '../types/PizzaType';
 import { SortType } from '../types/SortType';
 
-export default function Main() {
+export default function MainPage() {
   const [pizzas, setPizzas] = useState<PizzaType[]>([]);
   const [isLoading, setIsLoading] = useState(false);
-
-  const { searchValue } = useContext(SearchContext) as SearchContextType;
 
   const [selectedCategory, setSelectedCategory] = useState<PizzaCategory>(
     PizzaCategory.All,
@@ -23,10 +19,6 @@ export default function Main() {
     title: 'популярности',
     type: 'raiting',
   });
-
-  const filteredPizzas = pizzas.filter(pizza =>
-    pizza.title.toLowerCase().includes(searchValue.toLowerCase()),
-  );
 
   async function getPizzas() {
     setIsLoading(true);
@@ -64,21 +56,9 @@ export default function Main() {
         />
         <Sort selectedType={selectedType} setSelectedType={setSelectedType} />
       </div>
+
       <h2 className="content__title">Все пиццы</h2>
-      <div className="content__items">
-        {isLoading
-          ? [...new Array(6)].map((_, index) => <PizzaSkeleton key={index} />)
-          : filteredPizzas.map(({ id, imageUrl, title, types, sizes, price }) => (
-              <PizzaBlock
-                key={id + title}
-                imageUrl={imageUrl}
-                title={title}
-                types={types}
-                sizes={sizes}
-                price={price}
-              />
-            ))}
-      </div>
+      <PizzasList isLoading={isLoading} pizzas={pizzas} />
     </div>
   );
 }

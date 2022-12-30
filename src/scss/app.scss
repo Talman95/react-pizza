@@ -36,16 +36,6 @@ body {
     }
   }
 
-  &__items {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-
-    @media (max-width: 722px) {
-      justify-content: center;
-    }
-  }
-
   &__top {
     display: flex;
     align-items: center;

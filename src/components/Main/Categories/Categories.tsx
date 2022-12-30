@@ -1,4 +1,5 @@
-import { PizzaCategory } from '../enums/PizzaCategory';
+import { PizzaCategory } from '../../../enums/PizzaCategory';
+import styles from './Categories.module.scss';
 
 type PropsType = {
   selectedCategory: PizzaCategory;
@@ -16,13 +17,13 @@ export function Categories({ selectedCategory, onCategoryChange }: PropsType) {
   ];
 
   return (
-    <div className="categories">
+    <div className={styles.categories}>
       <ul>
         {categories.map(({ title, category }) => (
           <li
             key={title}
             onClick={() => onCategoryChange(category)}
-            className={selectedCategory === category ? 'active' : ''}
+            className={selectedCategory === category ? `${styles.active}` : ''}
           >
             {title}
           </li>

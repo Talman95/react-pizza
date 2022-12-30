@@ -1,0 +1,13 @@
+.items {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+
+  @media (max-width: 1150px) {
+    justify-content: space-between;
+  }
+
+  @media (max-width: 722px) {
+    justify-content: center;
+  }
+}

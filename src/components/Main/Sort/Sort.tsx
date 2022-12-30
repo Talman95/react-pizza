@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { SortType } from '../types/SortType';
+import { SortType } from '../../../types/SortType';
+import styles from './Sort.module.scss';
 
 type PropsType = {
   selectedType: SortType;
@@ -25,8 +26,8 @@ export function Sort({ selectedType, setSelectedType }: PropsType) {
   };
 
   return (
-    <div className="sort">
-      <div className="sort__label">
+    <div className={styles.sort}>
+      <div className={styles.label}>
         <svg
           width="10"
           height="6"
@@ -43,13 +44,13 @@ export function Sort({ selectedType, setSelectedType }: PropsType) {
         <span onClick={onOpenSortClick}>{selectedType.title}</span>
       </div>
       {isVisible && (
-        <div className="sort__popup">
+        <div className={styles.popup}>
           <ul>
             {sortTypes.map(({ title, type }) => (
               <li
                 key={type}
                 onClick={() => onCloseSortClick({ title, type } as SortType)}
-                className={type === selectedType.type ? 'active' : ''}
+                className={type === selectedType.type ? `${styles.active}` : ''}
               >
                 {title}
               </li>
