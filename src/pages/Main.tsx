@@ -1,4 +1,5 @@
 import { useContext, useEffect, useState } from 'react';
+import { pizzaApi } from '../api/pizza-api';
 
 import { SearchContext, SearchContextType } from '../App';
 import { Categories } from '../components/Categories';
@@ -27,21 +28,27 @@ export default function Main() {
     pizza.title.toLowerCase().includes(searchValue.toLowerCase()),
   );
 
-  useEffect(() => {
-    const category = selectedCategory > 0 ? '&category=' + selectedCategory : '';
-
+  async function getPizzas() {
     setIsLoading(true);
 
-    fetch(
-      `${process.env.REACT_APP_BASE_URL}?sortBy=${selectedType.type}&order=desc${category}`,
-    )
-      .then(res => {
-        return res.json();
-      })
-      .then(res => {
-        setPizzas(res.products);
-        setIsLoading(false);
-      });
+    const sortBy = selectedType.type;
+    const category = selectedCategory > 0 ? selectedCategory : undefined;
+
+    const res = await pizzaApi.fetchPizzas({
+      sortBy,
+      order: 'desc',
+      category,
+    });
+
+    setPizzas(res);
+
+    setIsLoading(false);
+  }
+
+  useEffect(() => {
+    getPizzas();
+
+    window.scrollTo(0, 0);
   }, [selectedCategory, selectedType]);
 
   const onCategoryChange = (index: PizzaCategory) => {
