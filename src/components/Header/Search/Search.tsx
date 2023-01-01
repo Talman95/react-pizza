@@ -1,10 +1,23 @@
-import { useContext } from 'react';
-import { SearchContext, SearchContextType } from '../../../App';
+import { ChangeEvent } from 'react';
+import { useSelector } from 'react-redux';
+import { useAppDispatch } from '../../../hooks/useAppDispatch';
+import { searchValueSelect } from '../../../redux/selectors/filter-selectors';
+import { setSearchValue } from '../../../redux/slices/filter-slice';
 
 import styles from './Search.module.scss';
 
 export function Search() {
-  const { searchValue, setSearchValue } = useContext(SearchContext) as SearchContextType;
+  const dispatch = useAppDispatch();
+
+  const searchValue = useSelector(searchValueSelect);
+
+  const onSearchValueChange = (e: ChangeEvent<HTMLInputElement>) => {
+    dispatch(setSearchValue({ value: e.currentTarget.value }));
+  };
+
+  const onRemoveSearchValueClick = () => {
+    dispatch(setSearchValue({ value: '' }));
+  };
 
   return (
     <div className={styles.root}>
@@ -46,12 +59,12 @@ export function Search() {
         placeholder="Найти пиццу..."
         className={styles.myInput}
         value={searchValue}
-        onChange={e => setSearchValue(e.currentTarget.value)}
+        onChange={onSearchValueChange}
       />
       {searchValue && (
         <svg
           className={styles.closeIcon}
-          onClick={() => setSearchValue('')}
+          onClick={onRemoveSearchValueClick}
           viewBox="0 0 20 20"
           xmlns="http://www.w3.org/2000/svg"
         >

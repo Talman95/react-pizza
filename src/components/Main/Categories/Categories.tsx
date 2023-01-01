@@ -1,12 +1,19 @@
+import { useSelector } from 'react-redux';
 import { PizzaCategory } from '../../../enums/PizzaCategory';
+import { useAppDispatch } from '../../../hooks/useAppDispatch';
+import { categoryIdSelect } from '../../../redux/selectors/filter-selectors';
+import { setCategoryId } from '../../../redux/slices/filter-slice';
 import styles from './Categories.module.scss';
 
-type PropsType = {
-  selectedCategory: PizzaCategory;
-  onCategoryChange: (index: PizzaCategory) => void;
-};
+export function Categories() {
+  const categoryId = useSelector(categoryIdSelect);
 
-export function Categories({ selectedCategory, onCategoryChange }: PropsType) {
+  const dispatch = useAppDispatch();
+
+  const onCategoryChange = (id: PizzaCategory) => {
+    dispatch(setCategoryId({ id }));
+  };
+
   const categories = [
     { title: 'Все', category: PizzaCategory.All },
     { title: 'Мясные', category: PizzaCategory.Meat },
@@ -23,7 +30,7 @@ export function Categories({ selectedCategory, onCategoryChange }: PropsType) {
           <li
             key={title}
             onClick={() => onCategoryChange(category)}
-            className={selectedCategory === category ? `${styles.active}` : ''}
+            className={categoryId === category ? `${styles.active}` : ''}
           >
             {title}
           </li>

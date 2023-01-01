@@ -1,4 +1,6 @@
-export type SortType = 
-| {title: 'популярности', type: 'raiting'} 
-| {title: 'цене', type: 'price'} 
-| {title: 'алфавиту', type: 'title'}
+import { SortTypeName } from '../enums/SortTypeName';
+
+export type SortType =
+  | { title: 'популярности'; type: SortTypeName.RAITING }
+  | { title: 'цене'; type: SortTypeName.PRICE }
+  | { title: 'алфавиту'; type: SortTypeName.TITLE };

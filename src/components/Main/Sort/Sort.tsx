@@ -1,27 +1,31 @@
 import { useState } from 'react';
+import { useSelector } from 'react-redux';
+import { SortTypeName } from '../../../enums/SortTypeName';
+import { useAppDispatch } from '../../../hooks/useAppDispatch';
+import { sortTypeSelect } from '../../../redux/selectors/filter-selectors';
+import { setSortType } from '../../../redux/slices/filter-slice';
 import { SortType } from '../../../types/SortType';
 import styles from './Sort.module.scss';
 
-type PropsType = {
-  selectedType: SortType;
-  setSelectedType: (selectedType: SortType) => void;
-};
+export function Sort() {
+  const selectedType = useSelector(sortTypeSelect);
 
-export function Sort({ selectedType, setSelectedType }: PropsType) {
-  const sortTypes: SortType[] = [
-    { title: 'популярности', type: 'raiting' },
-    { title: 'цене', type: 'price' },
-    { title: 'алфавиту', type: 'title' },
-  ];
+  const dispatch = useAppDispatch();
 
   const [isVisible, setIsVisible] = useState(false);
+
+  const sortTypes: SortType[] = [
+    { title: 'популярности', type: SortTypeName.RAITING },
+    { title: 'цене', type: SortTypeName.PRICE },
+    { title: 'алфавиту', type: SortTypeName.TITLE },
+  ];
 
   const onOpenSortClick = () => {
     setIsVisible(true);
   };
 
   const onCloseSortClick = (type: SortType) => {
-    setSelectedType(type);
+    dispatch(setSortType({ type }));
     setIsVisible(false);
   };
 
