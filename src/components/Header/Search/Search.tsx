@@ -1,22 +1,49 @@
-import { ChangeEvent } from 'react';
+import { ChangeEvent, useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
+
 import { useAppDispatch } from '../../../hooks/useAppDispatch';
+import { useDebounce } from '../../../hooks/useDebounce';
 import { searchValueSelect } from '../../../redux/selectors/filter-selectors';
 import { setSearchValue } from '../../../redux/slices/filter-slice';
-
 import styles from './Search.module.scss';
 
 export function Search() {
+  console.log('Поиск');
   const dispatch = useAppDispatch();
+
+  const inputRef = useRef<HTMLInputElement | null>(null);
+  const firstRender = useRef(true);
 
   const searchValue = useSelector(searchValueSelect);
 
+  const [currentSearchValue, setCurrentSearchValue] = useState(searchValue);
+
+  const requestSearchValue = useDebounce(currentSearchValue);
+
+  useEffect(() => {
+    if (currentSearchValue === searchValue) {
+      return;
+    }
+
+    setCurrentSearchValue(searchValue);
+  }, [searchValue]);
+
+  useEffect(() => {
+    if (firstRender.current) {
+      firstRender.current = false;
+      return;
+    }
+
+    dispatch(setSearchValue({ value: requestSearchValue }));
+  }, [requestSearchValue]);
+
   const onSearchValueChange = (e: ChangeEvent<HTMLInputElement>) => {
-    dispatch(setSearchValue({ value: e.currentTarget.value }));
+    setCurrentSearchValue(e.currentTarget.value);
   };
 
   const onRemoveSearchValueClick = () => {
     dispatch(setSearchValue({ value: '' }));
+    inputRef.current?.focus();
   };
 
   return (
@@ -58,8 +85,9 @@ export function Search() {
       <input
         placeholder="Найти пиццу..."
         className={styles.myInput}
-        value={searchValue}
+        value={currentSearchValue}
         onChange={onSearchValueChange}
+        ref={inputRef}
       />
       {searchValue && (
         <svg
