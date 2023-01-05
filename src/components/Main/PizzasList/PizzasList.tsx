@@ -1,8 +1,6 @@
-import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 
 import { useAppDispatch } from '../../../hooks/useAppDispatch';
-import { fetchPizzas } from '../../../redux/middlewares/fetchPizzas';
 import {
   categoryIdSelect,
   searchValueSelect,
@@ -24,18 +22,18 @@ export function PizzasList() {
   const categoryId = useSelector(categoryIdSelect);
   const searchValue = useSelector(searchValueSelect);
 
-  async function getPizzas() {
-    const sortBy = selectedType.type;
-    const category = categoryId > 0 ? categoryId : undefined;
+  // async function getPizzas() {
+  //   const sortBy = selectedType.type;
+  //   const category = categoryId > 0 ? categoryId : undefined;
 
-    dispatch(fetchPizzas({ sortBy, order: 'desc', category }));
-  }
+  //   dispatch(fetchPizzas({ sortBy, order: 'desc', category }));
+  // }
 
-  useEffect(() => {
-    getPizzas();
+  // useEffect(() => {
+  //   getPizzas();
 
-    window.scrollTo(0, 0);
-  }, [categoryId, selectedType]);
+  //   window.scrollTo(0, 0);
+  // }, [categoryId, selectedType]);
 
   const filteredPizzas = pizzas.filter(pizza =>
     pizza.title.toLowerCase().includes(searchValue.toLowerCase()),

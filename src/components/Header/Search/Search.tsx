@@ -8,7 +8,6 @@ import { setSearchValue } from '../../../redux/slices/filter-slice';
 import styles from './Search.module.scss';
 
 export function Search() {
-  console.log('Поиск');
   const dispatch = useAppDispatch();
 
   const inputRef = useRef<HTMLInputElement | null>(null);

@@ -25,9 +25,21 @@ const filterSlice = createSlice({
     setSearchValue: (state, action: PayloadAction<{ value: string }>) => {
       state.searchValue = action.payload.value;
     },
+    setFilters: (state, action: PayloadAction<{ filters: SetFiltersType }>) => {
+      state.categoryId = action.payload.filters.category;
+      state.searchValue = action.payload.filters.search;
+      state.sort = action.payload.filters.sortBy;
+    },
   },
 });
 
 export const filterReducer = filterSlice.reducer;
 
-export const { setCategoryId, setSortType, setSearchValue } = filterSlice.actions;
+export const { setCategoryId, setSortType, setSearchValue, setFilters } =
+  filterSlice.actions;
+
+type SetFiltersType = {
+  search: string;
+  category: PizzaCategory;
+  sortBy: SortType;
+};

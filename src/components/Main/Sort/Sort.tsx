@@ -7,18 +7,18 @@ import { setSortType } from '../../../redux/slices/filter-slice';
 import { SortType } from '../../../types/SortType';
 import styles from './Sort.module.scss';
 
+export const sortList: SortType[] = [
+  { title: 'популярности', type: SortTypeName.RAITING },
+  { title: 'цене', type: SortTypeName.PRICE },
+  { title: 'алфавиту', type: SortTypeName.TITLE },
+];
+
 export function Sort() {
   const selectedType = useSelector(sortTypeSelect);
 
   const dispatch = useAppDispatch();
 
   const [isVisible, setIsVisible] = useState(false);
-
-  const sortTypes: SortType[] = [
-    { title: 'популярности', type: SortTypeName.RAITING },
-    { title: 'цене', type: SortTypeName.PRICE },
-    { title: 'алфавиту', type: SortTypeName.TITLE },
-  ];
 
   const onOpenSortClick = () => {
     setIsVisible(true);
@@ -50,7 +50,7 @@ export function Sort() {
       {isVisible && (
         <div className={styles.popup}>
           <ul>
-            {sortTypes.map(({ title, type }) => (
+            {sortList.map(({ title, type }) => (
               <li
                 key={type}
                 onClick={() => onCloseSortClick({ title, type } as SortType)}

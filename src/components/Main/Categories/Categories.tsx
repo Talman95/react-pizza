@@ -5,6 +5,15 @@ import { categoryIdSelect } from '../../../redux/selectors/filter-selectors';
 import { setCategoryId } from '../../../redux/slices/filter-slice';
 import styles from './Categories.module.scss';
 
+export const categories = [
+  { title: 'Все', category: PizzaCategory.All },
+  { title: 'Мясные', category: PizzaCategory.Meat },
+  { title: 'Вегетарианская', category: PizzaCategory.Vegetarian },
+  { title: 'Гриль', category: PizzaCategory.Grilled },
+  { title: 'Острые', category: PizzaCategory.Spicy },
+  { title: 'Закрытые', category: PizzaCategory.Closed },
+];
+
 export function Categories() {
   const categoryId = useSelector(categoryIdSelect);
 
@@ -13,15 +22,6 @@ export function Categories() {
   const onCategoryChange = (id: PizzaCategory) => {
     dispatch(setCategoryId({ id }));
   };
-
-  const categories = [
-    { title: 'Все', category: PizzaCategory.All },
-    { title: 'Мясные', category: PizzaCategory.Meat },
-    { title: 'Вегетарианская', category: PizzaCategory.Vegetarian },
-    { title: 'Гриль', category: PizzaCategory.Grilled },
-    { title: 'Острые', category: PizzaCategory.Spicy },
-    { title: 'Закрытые', category: PizzaCategory.Closed },
-  ];
 
   return (
     <div className={styles.categories}>
