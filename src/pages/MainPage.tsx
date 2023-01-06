@@ -65,7 +65,7 @@ export default function MainPage() {
     if (isMounted.current) {
       setSearchParams({
         search: searchValue,
-        category: String(categoryId),
+        categoryId: String(categoryId),
         sortBy: selectedSortType.type,
       });
     }

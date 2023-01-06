@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { SortTypeName } from '../../../enums/SortTypeName';
 import { useAppDispatch } from '../../../hooks/useAppDispatch';
@@ -14,11 +14,27 @@ export const sortList: SortType[] = [
 ];
 
 export function Sort() {
-  const selectedType = useSelector(sortTypeSelect);
-
   const dispatch = useAppDispatch();
 
+  const selectedType = useSelector(sortTypeSelect);
+
   const [isVisible, setIsVisible] = useState(false);
+
+  const sortRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    const onOutsideSortClick = (event: any) => {
+      if (!sortRef.current?.contains(event.target)) {
+        setIsVisible(false);
+      }
+    };
+
+    document.body.addEventListener('click', onOutsideSortClick);
+
+    return () => {
+      document.body.removeEventListener('click', onOutsideSortClick);
+    };
+  }, []);
 
   const onOpenSortClick = () => {
     setIsVisible(true);
@@ -30,7 +46,7 @@ export function Sort() {
   };
 
   return (
-    <div className={styles.sort}>
+    <div ref={sortRef} className={styles.sort}>
       <div className={styles.label}>
         <svg
           width="10"
