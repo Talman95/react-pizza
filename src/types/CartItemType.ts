@@ -1,10 +1,10 @@
-export type PizzaType = {
-  category: number;
+export type CartItemType = {
   id: string;
+  category: number;
   imageUrl: string;
   price: number;
   rating: number;
-  sizes: number[];
+  size: number;
   title: string;
-  types: number[];
+  type: number;
 };

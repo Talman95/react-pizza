@@ -1,10 +1,18 @@
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 import pizzaLogo from '../../assets/img/pizza-logo.svg';
+import {
+  cartItemCountSelect,
+  totalPriceSelect,
+} from '../../redux/selectors/cart-selectors';
 import styles from './Header.module.scss';
 import { Search } from './Search/Search';
 
 export function Header() {
+  const totalPrice = useSelector(totalPriceSelect);
+  const cartItemCount = useSelector(cartItemCountSelect);
+
   return (
     <div className={styles.header}>
       <div className={styles.container}>
@@ -22,7 +30,7 @@ export function Header() {
 
         <div className={styles.cart}>
           <Link to="/cart" className={`button button--cart`}>
-            <span className="button__price">520 ₽</span>
+            <span className="button__price">{totalPrice} ₽</span>
             <div className="button__delimiter"></div>
             <svg
               width="18"
@@ -53,7 +61,7 @@ export function Header() {
                 stroke-linejoin="round"
               />
             </svg>
-            <span>3</span>
+            <span>{cartItemCount}</span>
           </Link>
         </div>
       </div>

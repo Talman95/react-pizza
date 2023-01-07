@@ -21,14 +21,16 @@ export function PizzasList() {
     <div className={styles.items}>
       {isLoading
         ? [...new Array(8)].map((_, index) => <PizzaSkeleton key={index} />)
-        : filteredPizzas.map(({ id, imageUrl, title, types, sizes, price }) => (
+        : filteredPizzas.map(({ id, imageUrl, title, types, sizes, price, rating }) => (
             <PizzaBlock
               key={id + title}
+              id={id}
               imageUrl={imageUrl}
               title={title}
               types={types}
               sizes={sizes}
               price={price}
+              rating={rating}
             />
           ))}
     </div>

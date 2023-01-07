@@ -1,28 +1,77 @@
+import { useAppDispatch } from '../../../../hooks/useAppDispatch';
+import { addItem, deletePosition, removeItem } from '../../../../redux/slices/cart-slice';
+import { CartItemType } from '../../../../types/CartItemType';
 import styles from './CartItem.module.scss';
 
-export function CartItem() {
+type PropsType = {
+  id: string;
+  category: number;
+  imageUrl: string;
+  price: number;
+  size: number;
+  title: string;
+  type: number;
+  count: number;
+  rating: number;
+};
+
+const doughTypes = ['тонкое', 'традиционное'];
+
+export function CartItem({
+  id,
+  imageUrl,
+  title,
+  type,
+  size,
+  price,
+  count,
+  rating,
+  category,
+}: PropsType) {
+  const dispatch = useAppDispatch();
+
+  const onAddProductClick = () => {
+    const item: CartItemType = {
+      id,
+      category,
+      imageUrl,
+      price,
+      rating,
+      size,
+      title,
+      type,
+    };
+
+    dispatch(addItem(item));
+  };
+
+  const onRemoveProductClick = () => {
+    dispatch(removeItem(id));
+  };
+
+  const onDeletePositionClick = () => {
+    dispatch(deletePosition(id));
+  };
+
   return (
     <div className={styles.item}>
       <div className={styles.description}>
         <div className={styles.itemImg}>
-          <img
-            className="pizza-block__image"
-            src={
-              'https://dodopizza.azureedge.net/static/Img/Products/f035c7f46c0844069722f2bb3ee9f113_584x584.jpeg'
-            }
-            alt="Pizza"
-          />
+          <img className="pizza-block__image" src={imageUrl} alt="Pizza" />
         </div>
         <div className={styles.itemInfo}>
-          <h3>Название</h3>
-          <p>тип, размер см.</p>
+          <h3>{title}</h3>
+          <p>
+            {doughTypes[type]}, {size} см.
+          </p>
         </div>
       </div>
 
       <div className={styles.setCountBlock}>
         <div className={styles.count}>
           <button
-            className={`button button--outline button--circle ${styles.countMinus}`}
+            onClick={onRemoveProductClick}
+            className={`button button--outline button--circle ${styles.minus} minus`}
           >
             <svg
               width="10"
@@ -41,8 +90,11 @@ export function CartItem() {
               ></path>
             </svg>
           </button>
-          <b>2</b>
-          <button className={`button button--outline button--circle ${styles.countPlus}`}>
+          <b>{count}</b>
+          <button
+            onClick={onAddProductClick}
+            className={`button button--outline button--circle ${styles.countPlus}`}
+          >
             <svg
               width="10"
               height="10"
@@ -63,11 +115,14 @@ export function CartItem() {
         </div>
 
         <div className={styles.price}>
-          <b>1040 ₽</b>
+          <b>{price * count}</b>
         </div>
 
         <div className={styles.remove}>
-          <div className={`${styles.button} button button--outline button--circle`}>
+          <div
+            onClick={onDeletePositionClick}
+            className={`${styles.button} button button--outline button--circle`}
+          >
             <svg
               width="10"
               height="10"

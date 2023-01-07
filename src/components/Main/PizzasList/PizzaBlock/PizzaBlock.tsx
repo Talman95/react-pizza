@@ -1,15 +1,30 @@
 import { useState } from 'react';
+import { useAppDispatch } from '../../../../hooks/useAppDispatch';
+import { addItem } from '../../../../redux/slices/cart-slice';
+import { CartItemType } from '../../../../types/CartItemType';
 
 type PropsType = {
+  id: string;
   imageUrl: string;
   title: string;
   types: number[];
   sizes: number[];
   price: number;
+  rating: number;
 };
 
-export function PizzaBlock({ imageUrl, title, types, sizes, price }: PropsType) {
-  const doughTypes = ['тонкое', 'традиционное'];
+const doughTypes = ['тонкое', 'традиционное'];
+
+export function PizzaBlock({
+  id,
+  imageUrl,
+  title,
+  types,
+  sizes,
+  price,
+  rating,
+}: PropsType) {
+  const dispatch = useAppDispatch();
 
   const [selectedType, setSelectedType] = useState<number>(types[0]);
 
@@ -21,6 +36,21 @@ export function PizzaBlock({ imageUrl, title, types, sizes, price }: PropsType) 
 
   const onSizeSelectedClick = (index: number) => {
     setSelectedSize(index);
+  };
+
+  const onAddProductClick = () => {
+    const item: CartItemType = {
+      id,
+      category: selectedType,
+      imageUrl,
+      price,
+      rating,
+      size: selectedSize,
+      title,
+      type: selectedType,
+    };
+
+    dispatch(addItem(item));
   };
 
   return (
@@ -66,8 +96,8 @@ export function PizzaBlock({ imageUrl, title, types, sizes, price }: PropsType) 
               fill="white"
             />
           </svg>
-          <span>Добавить</span>
-          <i>0</i>
+          <span onClick={onAddProductClick}>Добавить</span>
+          {/* <i>0</i> */}
         </div>
       </div>
     </div>

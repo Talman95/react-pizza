@@ -1,6 +1,14 @@
+import { useAppDispatch } from '../../../hooks/useAppDispatch';
+import { clearCart } from '../../../redux/slices/cart-slice';
 import styles from './CartHeader.module.scss';
 
 export function CartHeader() {
+  const dispatch = useAppDispatch();
+
+  const onClearCartClick = () => {
+    dispatch(clearCart());
+  };
+
   return (
     <div className={styles.top}>
       <h2 className={styles.title}>
@@ -72,7 +80,7 @@ export function CartHeader() {
             strokeLinejoin="round"
           ></path>
         </svg>
-        <span>Очистить корзину</span>
+        <span onClick={onClearCartClick}>Очистить корзину</span>
       </div>
     </div>
   );

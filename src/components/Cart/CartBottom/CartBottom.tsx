@@ -1,15 +1,23 @@
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import {
+  cartItemCountSelect,
+  totalPriceSelect,
+} from '../../../redux/selectors/cart-selectors';
 import styles from './CartBottom.module.scss';
 
 export function CartBottom() {
+  const totalPrice = useSelector(totalPriceSelect);
+  const cartItemCount = useSelector(cartItemCountSelect);
+
   return (
     <div className={styles.bottom}>
       <div className={styles.details}>
         <span>
-          Всего пицц: <b>3 шт.</b>
+          Всего пицц: <b>{cartItemCount} шт.</b>
         </span>
         <span>
-          Сумма заказа: <b>1020 ₽</b>
+          Сумма заказа: <b>{totalPrice}</b>
         </span>
       </div>
       <div className={styles.buttons}>
