@@ -1,7 +1,8 @@
 import { useSelector } from 'react-redux';
+import { AppStatus } from '../../../enums/AppStatus';
 
 import { searchValueSelect } from '../../../redux/selectors/filter-selectors';
-import { loadingSelect, pizzasSelect } from '../../../redux/selectors/pizzas-selectors';
+import { pizzasSelect, statusSelect } from '../../../redux/selectors/pizzas-selectors';
 import { PizzaBlock } from './PizzaBlock/PizzaBlock';
 import { PizzaSkeleton } from './PizzaBlock/PizzaSkeleton';
 import styles from './PizzasList.module.scss';
@@ -9,7 +10,7 @@ import styles from './PizzasList.module.scss';
 export function PizzasList() {
   const pizzas = useSelector(pizzasSelect);
 
-  const isLoading = useSelector(loadingSelect);
+  const status = useSelector(statusSelect);
 
   const searchValue = useSelector(searchValueSelect);
 
@@ -19,7 +20,7 @@ export function PizzasList() {
 
   return (
     <div className={styles.items}>
-      {isLoading
+      {status === AppStatus.LOADING
         ? [...new Array(8)].map((_, index) => <PizzaSkeleton key={index} />)
         : filteredPizzas.map(({ id, imageUrl, title, types, sizes, price, rating }) => (
             <PizzaBlock

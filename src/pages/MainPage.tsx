@@ -3,8 +3,10 @@ import { useSelector } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
 
 import { Categories } from '../components/Main/Categories/Categories';
+import { PizzasError } from '../components/Main/PizzasError/PizzasError';
 import { PizzasList } from '../components/Main/PizzasList/PizzasList';
 import { Sort, sortList } from '../components/Main/Sort/Sort';
+import { AppStatus } from '../enums/AppStatus';
 import { useAppDispatch } from '../hooks/useAppDispatch';
 import { fetchPizzas } from '../redux/middlewares/fetchPizzas';
 import {
@@ -12,6 +14,7 @@ import {
   searchValueSelect,
   sortTypeSelect,
 } from '../redux/selectors/filter-selectors';
+import { statusSelect } from '../redux/selectors/pizzas-selectors';
 import { setFilters } from '../redux/slices/filter-slice';
 
 export default function MainPage() {
@@ -25,6 +28,7 @@ export default function MainPage() {
   const searchValue = useSelector(searchValueSelect);
   const categoryId = useSelector(categoryIdSelect);
   const selectedSortType = useSelector(sortTypeSelect);
+  const status = useSelector(statusSelect);
 
   useEffect(() => {
     if (window.location.search) {
@@ -52,8 +56,6 @@ export default function MainPage() {
   }
 
   useEffect(() => {
-    window.scrollTo(0, 0);
-
     if (!isSearch.current) {
       getPizzas();
     }
@@ -83,7 +85,7 @@ export default function MainPage() {
       </div>
 
       <h2 className="content__title">Все пиццы</h2>
-      <PizzasList />
+      {status !== AppStatus.ERROR ? <PizzasList /> : <PizzasError />}
     </div>
   );
 }

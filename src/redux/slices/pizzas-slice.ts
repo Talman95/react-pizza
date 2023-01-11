@@ -1,24 +1,29 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { AppStatus } from '../../enums/AppStatus';
 import { PizzaType } from '../../types/PizzaType';
 import { fetchPizzas } from '../middlewares/fetchPizzas';
 
 const initialState = {
-  isLoading: false,
+  status: AppStatus.SUCCESS,
   pizzas: [] as PizzaType[],
 };
 
 const pizzasSlice = createSlice({
-  name: 'pizzas',
+  name: 'pizza',
   initialState,
   reducers: {},
   extraReducers: builder => {
     builder
       .addCase(fetchPizzas.pending, state => {
-        state.isLoading = true;
+        state.status = AppStatus.LOADING;
       })
       .addCase(fetchPizzas.fulfilled, (state, action) => {
         state.pizzas = action.payload.pizzas;
-        state.isLoading = false;
+        state.status = AppStatus.SUCCESS;
+      })
+      .addCase(fetchPizzas.rejected, state => {
+        state.pizzas = [];
+        state.status = AppStatus.ERROR;
       });
   },
 });
