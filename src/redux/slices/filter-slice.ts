@@ -1,7 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+
 import { PizzaCategory } from '../../enums/PizzaCategory';
-import { SortTypeName } from './../../enums/SortTypeName';
-import { SortType } from './../../types/SortType';
+import { SortTypeName } from '../../enums/SortTypeName';
+import { SortType } from '../../types/SortType';
 
 const initialState = {
   categoryId: PizzaCategory.All,

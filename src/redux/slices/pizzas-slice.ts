@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+
 import { AppStatus } from '../../enums/AppStatus';
 import { PizzaType } from '../../types/PizzaType';
 import { fetchPizzas } from '../middlewares/fetchPizzas';

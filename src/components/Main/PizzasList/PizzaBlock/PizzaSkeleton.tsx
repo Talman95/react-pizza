@@ -1,6 +1,8 @@
+import { FC } from 'react';
+
 import ContentLoader from 'react-content-loader';
 
-export function PizzaSkeleton() {
+export const PizzaSkeleton: FC = () => {
   return (
     <ContentLoader
       className="pizza-block"
@@ -18,4 +20,4 @@ export function PizzaSkeleton() {
       <rect x="125" y="427" rx="24" ry="24" width="152" height="45" />
     </ContentLoader>
   );
-}
+};

@@ -1,7 +1,10 @@
-import { useState } from 'react';
+import { FC, useState } from 'react';
+
 import { useAppDispatch } from '../../../../hooks/useAppDispatch';
 import { addItem } from '../../../../redux/slices/cart-slice';
 import { CartItemType } from '../../../../types/CartItemType';
+
+import styles from './PizzaBlock.module.scss';
 
 type PropsType = {
   id: string;
@@ -15,7 +18,7 @@ type PropsType = {
 
 const doughTypes = ['тонкое', 'традиционное'];
 
-export function PizzaBlock({
+export const PizzaBlock: FC<PropsType> = ({
   id,
   imageUrl,
   title,
@@ -23,22 +26,22 @@ export function PizzaBlock({
   sizes,
   price,
   rating,
-}: PropsType) {
+}) => {
   const dispatch = useAppDispatch();
 
   const [selectedType, setSelectedType] = useState<number>(types[0]);
 
   const [selectedSize, setSelectedSize] = useState<number>(sizes[0]);
 
-  const onTypeSelectedClick = (index: number) => {
+  const onTypeSelectedClick = (index: number): void => {
     setSelectedType(index);
   };
 
-  const onSizeSelectedClick = (index: number) => {
+  const onSizeSelectedClick = (index: number): void => {
     setSelectedSize(index);
   };
 
-  const onAddProductClick = () => {
+  const onAddProductClick = (): void => {
     const item: CartItemType = {
       id,
       category: selectedType,
@@ -54,36 +57,36 @@ export function PizzaBlock({
   };
 
   return (
-    <div className="pizza-block">
-      <img className="pizza-block__image" src={imageUrl} alt="Pizza" />
-      <h4 className="pizza-block__title">{title}</h4>
-      <div className="pizza-block__selector">
+    <div className={styles.pizzaBlock}>
+      <img className={styles.image} src={imageUrl} alt="Pizza" />
+      <h4 className={styles.title}>{title}</h4>
+      <div className={styles.selector}>
         <ul>
           {types.map(type => (
-            <li
-              key={type}
-              onClick={() => onTypeSelectedClick(type)}
-              className={selectedType === type ? 'active' : ''}
-            >
-              {doughTypes[type]}
+            <li key={type} className={selectedType === type ? styles.active : ''}>
+              <button type="button" onClick={() => onTypeSelectedClick(type)}>
+                {doughTypes[type]}
+              </button>
             </li>
           ))}
         </ul>
         <ul>
           {sizes.map(size => (
-            <li
-              key={size}
-              onClick={() => onSizeSelectedClick(size)}
-              className={selectedSize === size ? 'active' : ''}
-            >
-              {size}
+            <li key={size} className={selectedSize === size ? styles.active : ''}>
+              <button type="button" onClick={() => onSizeSelectedClick(size)}>
+                {size}
+              </button>
             </li>
           ))}
         </ul>
       </div>
-      <div className="pizza-block__bottom">
-        <div className="pizza-block__price">от {price} ₽</div>
-        <div className="button button--outline button--add">
+      <div className={styles.bottom}>
+        <div className={styles.price}>от {price} ₽</div>
+        <button
+          type="button"
+          onClick={onAddProductClick}
+          className="button button--outline button--add"
+        >
           <svg
             width="12"
             height="12"
@@ -96,10 +99,10 @@ export function PizzaBlock({
               fill="white"
             />
           </svg>
-          <span onClick={onAddProductClick}>Добавить</span>
-          {/* <i>0</i> */}
-        </div>
+          Добавить
+        </button>
+        {/* <i>0</i> */}
       </div>
     </div>
   );
-}
+};

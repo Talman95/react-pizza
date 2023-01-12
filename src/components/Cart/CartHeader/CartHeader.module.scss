@@ -33,19 +33,19 @@
   }
 
   .clear {
-    display: flex;
-    align-items: center;
-    cursor: pointer;
     @include noselect();
 
-    span {
-      display: inline-block;
+    button {
+      display: flex;
+      align-items: center;
       margin-left: 7px;
       color: #b6b6b6;
       font-size: 18px;
+      border: 0;
+      cursor: pointer;
     }
 
-    span,
+    button,
     svg,
     path {
       transition: all $duration ease-in-out;
@@ -57,7 +57,7 @@
           stroke: darken($color: #b6b6b6, $amount: 50);
         }
       }
-      span {
+      button {
         color: darken($color: #b6b6b6, $amount: 50);
       }
     }

@@ -1,8 +1,12 @@
+import { FC } from 'react';
+
 import { useSelector } from 'react-redux';
+
 import { PizzaCategory } from '../../../enums/PizzaCategory';
 import { useAppDispatch } from '../../../hooks/useAppDispatch';
 import { categoryIdSelect } from '../../../redux/selectors/filter-selectors';
 import { setCategoryId } from '../../../redux/slices/filter-slice';
+
 import styles from './Categories.module.scss';
 
 export const categories = [
@@ -14,12 +18,12 @@ export const categories = [
   { title: 'Закрытые', category: PizzaCategory.Closed },
 ];
 
-export function Categories() {
+export const Categories: FC = () => {
   const categoryId = useSelector(categoryIdSelect);
 
   const dispatch = useAppDispatch();
 
-  const onCategoryChange = (id: PizzaCategory) => {
+  const onCategoryChange = (id: PizzaCategory): void => {
     dispatch(setCategoryId({ id }));
   };
 
@@ -27,15 +31,17 @@ export function Categories() {
     <div className={styles.categories}>
       <ul>
         {categories.map(({ title, category }) => (
-          <li
-            key={title}
-            onClick={() => onCategoryChange(category)}
-            className={categoryId === category ? `${styles.active}` : ''}
-          >
-            {title}
+          <li key={title}>
+            <button
+              type="button"
+              className={categoryId === category ? `${styles.active}` : ''}
+              onClick={() => onCategoryChange(category)}
+            >
+              {title}
+            </button>
           </li>
         ))}
       </ul>
     </div>
   );
-}
+};

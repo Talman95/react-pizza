@@ -1,8 +1,10 @@
+import { FC } from 'react';
+
 import { Header } from './components/Header/Header';
 import { AppRouter } from './routes/AppRouter';
 import './scss/app.scss';
 
-function App() {
+export const App: FC = () => {
   return (
     <div className="wrapper">
       <Header />
@@ -11,6 +13,4 @@ function App() {
       </div>
     </div>
   );
-}
-
-export default App;
+};

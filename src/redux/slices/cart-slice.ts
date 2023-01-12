@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import { CartItemType } from '../../types/CartItemType';
 
-type CartItemDomainType = CartItemType & { count: number };
+export type CartItemDomainType = CartItemType & { count: number };
 
 const initialState = {
   totalPrice: 0,
@@ -17,12 +17,13 @@ const cartSlice = createSlice({
       const findItem = state.items.find(item => item.id === action.payload.id);
 
       if (findItem) {
-        findItem.count++;
+        findItem.count += 1;
       } else {
         const newItem = {
           ...action.payload,
           count: 1,
         };
+
         state.items.push(newItem);
       }
 
@@ -35,7 +36,7 @@ const cartSlice = createSlice({
 
       if (findItem) {
         if (findItem.count > 1) {
-          findItem.count--;
+          findItem.count -= 1;
         } else {
           state.items = state.items.filter(item => item.id !== action.payload);
         }
@@ -45,6 +46,7 @@ const cartSlice = createSlice({
     },
     deletePosition(state, action: PayloadAction<string>) {
       const index = state.items.findIndex(item => item.id === action.payload);
+
       if (index > -1) {
         state.items.splice(index, 1);
       }

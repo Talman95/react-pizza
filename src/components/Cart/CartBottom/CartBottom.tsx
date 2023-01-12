@@ -1,12 +1,16 @@
+import { FC } from 'react';
+
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+
 import {
   cartItemCountSelect,
   totalPriceSelect,
 } from '../../../redux/selectors/cart-selectors';
+
 import styles from './CartBottom.module.scss';
 
-export function CartBottom() {
+export const CartBottom: FC = () => {
   const totalPrice = useSelector(totalPriceSelect);
   const cartItemCount = useSelector(cartItemCountSelect);
 
@@ -38,7 +42,7 @@ export function CartBottom() {
               strokeWidth="1.5"
               strokeLinecap="round"
               strokeLinejoin="round"
-            ></path>
+            />
           </svg>
           <span>Вернуться назад</span>
         </Link>
@@ -48,4 +52,4 @@ export function CartBottom() {
       </div>
     </div>
   );
-}
+};

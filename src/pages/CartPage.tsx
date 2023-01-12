@@ -1,11 +1,14 @@
+import { FC } from 'react';
+
 import { useSelector } from 'react-redux';
+
 import { CartBottom } from '../components/Cart/CartBottom/CartBottom';
-import CartEmpty from '../components/Cart/CartEmpty/CartEmpty';
+import { CartEmpty } from '../components/Cart/CartEmpty/CartEmpty';
 import { CartHeader } from '../components/Cart/CartHeader/CartHeader';
 import { CartItemsBlock } from '../components/Cart/CartItemsBlock/CartItemsBlock';
 import { cartItemsSelect } from '../redux/selectors/cart-selectors';
 
-export default function CartPage() {
+export const CartPage: FC = () => {
   const items = useSelector(cartItemsSelect);
 
   return (
@@ -23,4 +26,4 @@ export default function CartPage() {
       )}
     </div>
   );
-}
+};

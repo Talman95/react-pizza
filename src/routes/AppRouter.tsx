@@ -1,10 +1,12 @@
+import { FC } from 'react';
+
 import { Navigate, Route, Routes } from 'react-router-dom';
 
-import CartPage from '../pages/CartPage';
-import MainPage from '../pages/MainPage';
-import NotFound from '../pages/NotFound';
+import { CartPage } from '../pages/CartPage';
+import { MainPage } from '../pages/MainPage';
+import { NotFound } from '../pages/NotFound';
 
-export function AppRouter() {
+export const AppRouter: FC = () => {
   return (
     <Routes>
       <Route path="/" element={<MainPage />} />
@@ -14,4 +16,4 @@ export function AppRouter() {
       <Route path="/*" element={<Navigate to="/404" />} />
     </Routes>
   );
-}
+};

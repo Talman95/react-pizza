@@ -1,9 +1,12 @@
+import { FC } from 'react';
+
 import { useSelector } from 'react-redux';
 
 import { cartItemsSelect } from '../../../redux/selectors/cart-selectors';
+
 import { CartItem } from './CartItem/CartItem';
 
-export function CartItemsBlock() {
+export const CartItemsBlock: FC = () => {
   const items = useSelector(cartItemsSelect);
 
   return (
@@ -26,4 +29,4 @@ export function CartItemsBlock() {
       )}
     </div>
   );
-}
+};

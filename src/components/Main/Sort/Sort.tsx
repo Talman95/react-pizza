@@ -1,10 +1,13 @@
-import { useEffect, useRef, useState } from 'react';
+import { FC, useEffect, useRef, useState } from 'react';
+
 import { useSelector } from 'react-redux';
+
 import { SortTypeName } from '../../../enums/SortTypeName';
 import { useAppDispatch } from '../../../hooks/useAppDispatch';
 import { sortTypeSelect } from '../../../redux/selectors/filter-selectors';
 import { setSortType } from '../../../redux/slices/filter-slice';
 import { SortType } from '../../../types/SortType';
+
 import styles from './Sort.module.scss';
 
 export const sortList: SortType[] = [
@@ -13,7 +16,7 @@ export const sortList: SortType[] = [
   { title: 'алфавиту', type: SortTypeName.TITLE },
 ];
 
-export function Sort() {
+export const Sort: FC = () => {
   const dispatch = useAppDispatch();
 
   const selectedType = useSelector(sortTypeSelect);
@@ -23,7 +26,7 @@ export function Sort() {
   const sortRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
-    const onOutsideSortClick = (event: any) => {
+    const onOutsideSortClick = (event: any): void => {
       if (!sortRef.current?.contains(event.target)) {
         setIsVisible(false);
       }
@@ -36,11 +39,11 @@ export function Sort() {
     };
   }, []);
 
-  const onOpenSortClick = () => {
+  const onOpenSortClick = (): void => {
     setIsVisible(true);
   };
 
-  const onCloseSortClick = (type: SortType) => {
+  const onCloseSortClick = (type: SortType): void => {
     dispatch(setSortType({ type }));
     setIsVisible(false);
   };
@@ -61,18 +64,22 @@ export function Sort() {
           />
         </svg>
         <b>Сортировка по:</b>
-        <span onClick={onOpenSortClick}>{selectedType.title}</span>
+        <button type="button" onClick={onOpenSortClick}>
+          {selectedType.title}
+        </button>
       </div>
       {isVisible && (
         <div className={styles.popup}>
           <ul>
             {sortList.map(({ title, type }) => (
-              <li
-                key={type}
-                onClick={() => onCloseSortClick({ title, type } as SortType)}
-                className={type === selectedType.type ? `${styles.active}` : ''}
-              >
-                {title}
+              <li key={type}>
+                <button
+                  type="button"
+                  className={type === selectedType.type ? `${styles.active}` : ''}
+                  onClick={() => onCloseSortClick({ title, type } as SortType)}
+                >
+                  {title}
+                </button>
               </li>
             ))}
           </ul>
@@ -80,4 +87,4 @@ export function Sort() {
       )}
     </div>
   );
-}
+};

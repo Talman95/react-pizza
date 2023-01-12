@@ -1,4 +1,5 @@
-import { useEffect, useRef } from 'react';
+import { FC, useEffect, useRef } from 'react';
+
 import { useSelector } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
 
@@ -17,7 +18,7 @@ import {
 import { statusSelect } from '../redux/selectors/pizzas-selectors';
 import { setFilters } from '../redux/slices/filter-slice';
 
-export default function MainPage() {
+export const MainPage: FC = () => {
   const dispatch = useAppDispatch();
 
   const isSearch = useRef(false);
@@ -48,7 +49,7 @@ export default function MainPage() {
     }
   }, []);
 
-  async function getPizzas() {
+  async function getPizzas(): Promise<void> {
     const sortBy = selectedSortType.type;
     const category = categoryId > 0 ? categoryId : undefined;
 
@@ -88,4 +89,4 @@ export default function MainPage() {
       {status !== AppStatus.ERROR ? <PizzasList /> : <PizzasError />}
     </div>
   );
-}
+};

@@ -1,13 +1,15 @@
-import { ChangeEvent, useEffect, useRef, useState } from 'react';
+import { ChangeEvent, FC, useEffect, useRef, useState } from 'react';
+
 import { useSelector } from 'react-redux';
 
 import { useAppDispatch } from '../../../hooks/useAppDispatch';
 import { useDebounce } from '../../../hooks/useDebounce';
 import { searchValueSelect } from '../../../redux/selectors/filter-selectors';
 import { setSearchValue } from '../../../redux/slices/filter-slice';
+
 import styles from './Search.module.scss';
 
-export function Search() {
+export const Search: FC = () => {
   const dispatch = useAppDispatch();
 
   const inputRef = useRef<HTMLInputElement | null>(null);
@@ -30,17 +32,18 @@ export function Search() {
   useEffect(() => {
     if (firstRender.current) {
       firstRender.current = false;
+
       return;
     }
 
     dispatch(setSearchValue({ value: requestSearchValue }));
   }, [requestSearchValue]);
 
-  const onSearchValueChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const onSearchValueChange = (e: ChangeEvent<HTMLInputElement>): void => {
     setCurrentSearchValue(e.currentTarget.value);
   };
 
-  const onRemoveSearchValueClick = () => {
+  const onRemoveSearchValueClick = (): void => {
     dispatch(setSearchValue({ value: '' }));
     inputRef.current?.focus();
   };
@@ -49,7 +52,7 @@ export function Search() {
     <div className={styles.root}>
       <svg
         className={styles.searchIcon}
-        enable-background="new 0 0 32 32"
+        enableBackground="new 0 0 32 32"
         id="Editable-line"
         version="1.1"
         viewBox="0 0 32 32"
@@ -62,19 +65,19 @@ export function Search() {
           id="XMLID_42_"
           r="9"
           stroke="#000000"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-miterlimit="10"
-          stroke-width="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeMiterlimit="10"
+          strokeWidth="2"
         />
         <line
           fill="none"
           id="XMLID_44_"
           stroke="#000000"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-miterlimit="10"
-          stroke-width="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeMiterlimit="10"
+          strokeWidth="2"
           x1="27"
           x2="20.366"
           y1="27"
@@ -100,4 +103,4 @@ export function Search() {
       )}
     </div>
   );
-}
+};
