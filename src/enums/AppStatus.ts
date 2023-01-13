@@ -2,4 +2,5 @@ export enum AppStatus {
   LOADING = 'loading',
   ERROR = 'error',
   SUCCESS = 'success',
+  INIT = 'init',
 }

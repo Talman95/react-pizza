@@ -1,5 +1,8 @@
 import { FC, useState } from 'react';
 
+import { Link } from 'react-router-dom';
+
+import { Path } from '../../../../enums/Path';
 import { useAppDispatch } from '../../../../hooks/useAppDispatch';
 import { addItem } from '../../../../redux/slices/cart-slice';
 import { CartItemType } from '../../../../types/CartItemType';
@@ -58,7 +61,9 @@ export const PizzaBlock: FC<PropsType> = ({
 
   return (
     <div className={styles.pizzaBlock}>
-      <img className={styles.image} src={imageUrl} alt="Pizza" />
+      <Link to={`${Path.PIZZA_INFO}/${id}`}>
+        <img className={styles.image} src={imageUrl} alt="Pizza" />
+      </Link>
       <h4 className={styles.title}>{title}</h4>
       <div className={styles.selector}>
         <ul>

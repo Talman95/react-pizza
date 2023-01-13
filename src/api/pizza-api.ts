@@ -15,4 +15,10 @@ export const pizzaApi = {
 
     return res.data.products;
   },
+
+  async getPizzaInfo(id: string): Promise<PizzaType> {
+    const res = await config.get<{ products: PizzaType }>(`/${id}`);
+
+    return res.data.products;
+  },
 };

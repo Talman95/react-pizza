@@ -55,6 +55,19 @@ body {
   width: $container-width;
   margin: 0 auto;
 
+  .buttonBack {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    bottom: 20px;
+  }
+
+  .skeleton {
+    display: flex;
+    align-items: center;
+  }
+
   &--cart {
     max-width: 820px;
     margin: 50px auto;
