@@ -1,4 +1,4 @@
-import { FC, useEffect, useRef, useState } from 'react';
+import { FC, memo, useEffect, useRef, useState } from 'react';
 
 import { useSelector } from 'react-redux';
 
@@ -16,7 +16,7 @@ export const sortList: SortType[] = [
   { title: 'алфавиту', type: SortTypeName.TITLE },
 ];
 
-export const Sort: FC = () => {
+export const Sort: FC = memo(() => {
   const dispatch = useAppDispatch();
 
   const selectedType = useSelector(sortTypeSelect);
@@ -87,4 +87,4 @@ export const Sort: FC = () => {
       )}
     </div>
   );
-};
+});

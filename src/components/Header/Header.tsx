@@ -24,7 +24,7 @@ export const Header: FC = () => {
   return (
     <div className={styles.header}>
       <div className={styles.container}>
-        <Link to="/">
+        <Link to={Path.MAIN}>
           <div className={styles.logo}>
             <img width="38" src={pizzaLogo} alt="Pizza logo" />
             <div>
@@ -38,7 +38,7 @@ export const Header: FC = () => {
 
         <div className={styles.cart}>
           {!isCartPage && (
-            <Link to="/cart" className="button button--cart">
+            <Link to={Path.CART} className="button button--cart">
               <span className="button__price">{totalPrice} ₽</span>
               <div className="button__delimiter" />
               <svg

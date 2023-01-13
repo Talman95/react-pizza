@@ -3,6 +3,7 @@ import { FC, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 
+import { PizzasError } from '../components/Main/PizzasError/PizzasError';
 import { PizzaInfo } from '../components/PizzaInfo/PizzaInfo';
 import { AppStatus } from '../enums/AppStatus';
 import { Path } from '../enums/Path';
@@ -48,11 +49,7 @@ export const PizzaInfoPage: FC = () => {
         </svg>
         Back
       </button>
-      {status === AppStatus.INIT || status === AppStatus.LOADING ? (
-        <div className="skeleton">Loading...</div>
-      ) : (
-        <PizzaInfo />
-      )}
+      {status === AppStatus.ERROR ? <PizzasError /> : <PizzaInfo />}
     </div>
   );
 };

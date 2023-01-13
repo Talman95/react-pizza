@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, memo } from 'react';
 
 import { useSelector } from 'react-redux';
 
@@ -18,7 +18,7 @@ export const categories = [
   { title: 'Закрытые', category: PizzaCategory.Closed },
 ];
 
-export const Categories: FC = () => {
+export const Categories: FC = memo(() => {
   const categoryId = useSelector(categoryIdSelect);
 
   const dispatch = useAppDispatch();
@@ -44,4 +44,4 @@ export const Categories: FC = () => {
       </ul>
     </div>
   );
-};
+});
