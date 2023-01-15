@@ -2,15 +2,15 @@ import { ChangeEvent, FC, useEffect, useRef, useState } from 'react';
 
 import { useSelector } from 'react-redux';
 
-import { useAppDispatch } from '../../../hooks/useAppDispatch';
+import { useActions } from '../../../hooks/useActions';
 import { useDebounce } from '../../../hooks/useDebounce';
 import { searchValueSelect } from '../../../redux/selectors/filter-selectors';
-import { setSearchValue } from '../../../redux/slices/filter-slice';
+import { filterActions } from '../../../redux/slices/filter-slice';
 
 import styles from './Search.module.scss';
 
 export const Search: FC = () => {
-  const dispatch = useAppDispatch();
+  const { setSearchValue } = useActions(filterActions);
 
   const inputRef = useRef<HTMLInputElement | null>(null);
   const firstRender = useRef(true);
@@ -36,7 +36,7 @@ export const Search: FC = () => {
       return;
     }
 
-    dispatch(setSearchValue({ value: requestSearchValue }));
+    setSearchValue({ value: requestSearchValue });
   }, [requestSearchValue]);
 
   const onSearchValueChange = (e: ChangeEvent<HTMLInputElement>): void => {
@@ -44,7 +44,7 @@ export const Search: FC = () => {
   };
 
   const onRemoveSearchValueClick = (): void => {
-    dispatch(setSearchValue({ value: '' }));
+    setSearchValue({ value: '' });
     inputRef.current?.focus();
   };
 

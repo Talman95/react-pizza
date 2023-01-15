@@ -12,6 +12,7 @@ import styles from './PizzaInfo.module.scss';
 
 export const PizzaInfo: FC = () => {
   const pizzaInfo = useSelector(pizzaInfoSelect);
+
   const status = useSelector(statusSelect);
 
   return (

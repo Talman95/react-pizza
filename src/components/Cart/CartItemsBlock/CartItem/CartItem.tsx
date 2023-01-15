@@ -1,7 +1,7 @@
 import { FC } from 'react';
 
-import { useAppDispatch } from '../../../../hooks/useAppDispatch';
-import { addItem, deletePosition, removeItem } from '../../../../redux/slices/cart-slice';
+import { useActions } from '../../../../hooks/useActions';
+import { cartActions } from '../../../../redux/slices/cart-slice';
 import { CartItemType } from '../../../../types/CartItemType';
 
 import styles from './CartItem.module.scss';
@@ -31,7 +31,7 @@ export const CartItem: FC<PropsType> = ({
   rating,
   category,
 }) => {
-  const dispatch = useAppDispatch();
+  const { addItem, removeItem, deletePosition } = useActions(cartActions);
 
   const onAddProductClick = (): void => {
     const item: CartItemType = {
@@ -45,15 +45,15 @@ export const CartItem: FC<PropsType> = ({
       type,
     };
 
-    dispatch(addItem(item));
+    addItem(item);
   };
 
   const onRemoveProductClick = (): void => {
-    dispatch(removeItem(id));
+    removeItem(id);
   };
 
   const onDeletePositionClick = (): void => {
-    dispatch(deletePosition(id));
+    deletePosition(id);
   };
 
   return (

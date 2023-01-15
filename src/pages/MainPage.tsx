@@ -8,6 +8,7 @@ import { PizzasError } from '../components/Main/PizzasError/PizzasError';
 import { PizzasList } from '../components/Main/PizzasList/PizzasList';
 import { Sort, sortList } from '../components/Main/Sort/Sort';
 import { AppStatus } from '../enums/AppStatus';
+import { useActions } from '../hooks/useActions';
 import { useAppDispatch } from '../hooks/useAppDispatch';
 import { fetchPizzas } from '../redux/middlewares/fetchPizzas';
 import {
@@ -16,10 +17,12 @@ import {
   sortTypeSelect,
 } from '../redux/selectors/filter-selectors';
 import { statusSelect } from '../redux/selectors/pizzas-selectors';
-import { setFilters } from '../redux/slices/filter-slice';
+import { filterActions } from '../redux/slices/filter-slice';
 
 export const MainPage: FC = () => {
   const dispatch = useAppDispatch();
+
+  const { setFilters } = useActions(filterActions);
 
   const isSearch = useRef(false);
   const isMounted = useRef(false);
@@ -43,7 +46,7 @@ export const MainPage: FC = () => {
         sortBy = selectedSortType;
       }
 
-      dispatch(setFilters({ filters: { search, category, sortBy } }));
+      setFilters({ filters: { search, category, sortBy } });
 
       isSearch.current = true;
     }

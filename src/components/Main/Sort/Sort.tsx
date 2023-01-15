@@ -3,9 +3,9 @@ import { FC, memo, useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 
 import { SortTypeName } from '../../../enums/SortTypeName';
-import { useAppDispatch } from '../../../hooks/useAppDispatch';
+import { useActions } from '../../../hooks/useActions';
 import { sortTypeSelect } from '../../../redux/selectors/filter-selectors';
-import { setSortType } from '../../../redux/slices/filter-slice';
+import { filterActions } from '../../../redux/slices/filter-slice';
 import { SortType } from '../../../types/SortType';
 
 import styles from './Sort.module.scss';
@@ -17,7 +17,7 @@ export const sortList: SortType[] = [
 ];
 
 export const Sort: FC = memo(() => {
-  const dispatch = useAppDispatch();
+  const { setSortType } = useActions(filterActions);
 
   const selectedType = useSelector(sortTypeSelect);
 
@@ -44,7 +44,7 @@ export const Sort: FC = memo(() => {
   };
 
   const onCloseSortClick = (type: SortType): void => {
-    dispatch(setSortType({ type }));
+    setSortType({ type });
     setIsVisible(false);
   };
 

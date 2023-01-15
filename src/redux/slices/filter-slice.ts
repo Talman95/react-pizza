@@ -34,10 +34,7 @@ const filterSlice = createSlice({
   },
 });
 
-export const filterReducer = filterSlice.reducer;
-
-export const { setCategoryId, setSortType, setSearchValue, setFilters } =
-  filterSlice.actions;
+export const { reducer: filterReducer, actions: filterActions } = filterSlice;
 
 type SetFiltersType = {
   search: string;

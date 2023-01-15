@@ -1,15 +1,15 @@
 import { FC } from 'react';
 
-import { useAppDispatch } from '../../../hooks/useAppDispatch';
-import { clearCart } from '../../../redux/slices/cart-slice';
+import { useActions } from '../../../hooks/useActions';
+import { cartActions } from '../../../redux/slices/cart-slice';
 
 import styles from './CartHeader.module.scss';
 
 export const CartHeader: FC = () => {
-  const dispatch = useAppDispatch();
+  const { clearCart } = useActions(cartActions);
 
   const onClearCartClick = (): void => {
-    dispatch(clearCart());
+    clearCart();
   };
 
   return (

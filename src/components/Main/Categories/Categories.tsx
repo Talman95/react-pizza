@@ -3,9 +3,9 @@ import { FC, memo } from 'react';
 import { useSelector } from 'react-redux';
 
 import { PizzaCategory } from '../../../enums/PizzaCategory';
-import { useAppDispatch } from '../../../hooks/useAppDispatch';
+import { useActions } from '../../../hooks/useActions';
 import { categoryIdSelect } from '../../../redux/selectors/filter-selectors';
-import { setCategoryId } from '../../../redux/slices/filter-slice';
+import { filterActions } from '../../../redux/slices/filter-slice';
 
 import styles from './Categories.module.scss';
 
@@ -19,12 +19,12 @@ export const categories = [
 ];
 
 export const Categories: FC = memo(() => {
+  const { setCategoryId } = useActions(filterActions);
+
   const categoryId = useSelector(categoryIdSelect);
 
-  const dispatch = useAppDispatch();
-
   const onCategoryChange = (id: PizzaCategory): void => {
-    dispatch(setCategoryId({ id }));
+    setCategoryId({ id });
   };
 
   return (

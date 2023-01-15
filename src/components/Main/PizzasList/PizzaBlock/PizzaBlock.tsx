@@ -3,8 +3,8 @@ import { FC, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import { Path } from '../../../../enums/Path';
-import { useAppDispatch } from '../../../../hooks/useAppDispatch';
-import { addItem } from '../../../../redux/slices/cart-slice';
+import { useActions } from '../../../../hooks/useActions';
+import { cartActions } from '../../../../redux/slices/cart-slice';
 import { CartItemType } from '../../../../types/CartItemType';
 
 import styles from './PizzaBlock.module.scss';
@@ -30,7 +30,7 @@ export const PizzaBlock: FC<PropsType> = ({
   price,
   rating,
 }) => {
-  const dispatch = useAppDispatch();
+  const { addItem } = useActions(cartActions);
 
   const [selectedType, setSelectedType] = useState<number>(types[0]);
 
@@ -56,7 +56,7 @@ export const PizzaBlock: FC<PropsType> = ({
       type: selectedType,
     };
 
-    dispatch(addItem(item));
+    addItem(item);
   };
 
   return (
@@ -106,7 +106,6 @@ export const PizzaBlock: FC<PropsType> = ({
           </svg>
           Добавить
         </button>
-        {/* <i>0</i> */}
       </div>
     </div>
   );
