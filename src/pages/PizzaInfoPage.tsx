@@ -11,7 +11,7 @@ import { useAppDispatch } from '../hooks/useAppDispatch';
 import { getPizzaInfo } from '../redux/middlewares/getPizzaInfo';
 import { statusSelect } from '../redux/selectors/pizza-info-selectors';
 
-export const PizzaInfoPage: FC = () => {
+const PizzaInfoPage: FC = () => {
   const { id } = useParams();
 
   const dispatch = useAppDispatch();
@@ -53,3 +53,5 @@ export const PizzaInfoPage: FC = () => {
     </div>
   );
 };
+
+export default PizzaInfoPage;
